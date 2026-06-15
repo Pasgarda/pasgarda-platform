@@ -1,0 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+  --font-sans: 'Outfit', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bebas Neue', cursive;
+  
+  /* Custom Theme Colors */
+  --color-deep-black: #0D0C0A;
+  --color-dark-brown: #2A1A0A;
+  --color-checker-dark: #1C1C1C;
+  --color-accent-maroon: #5C1A1A;
+  --color-accent-burgundy: #7A2020;
+  --color-accent-mahogany: #8B3A1C;
+  --color-glow-warm: #C45A00;
+  --color-gold-primary: #C8930A;
+  --color-gold-bright: #E8AB10;
+  --color-gold-light: #F5C842;
+  --color-gold-cream: #F7E090;
+  --color-gold-checker: #B8860B;
+  --color-bronze-muted: #8C6828;
+  --color-text-primary: #F2EDD6;
+  --color-text-muted: #8C6828;
+}
+
+/* Custom styles for premium look */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--color-deep-black);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+/* Checkerboard background helper */
+.bg-checkerboard {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(45deg, var(--color-checker-dark) 25%, transparent 25%), 
+    linear-gradient(-45deg, var(--color-checker-dark) 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, var(--color-checker-dark) 75%), 
+    linear-gradient(-45deg, transparent 75%, var(--color-checker-dark) 75%);
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+}
+
+/* Custom premium card */
+.premium-card {
+  background: linear-gradient(135deg, rgba(42, 26, 10, 0.7) 0%, rgba(13, 12, 10, 0.9) 100%);
+  border: 1px solid var(--color-bronze-muted);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+}
+
+/* Gold glow effect */
+.glow-gold {
+  box-shadow: 0 0 15px var(--color-gold-primary);
+}
+
+/* Gold pulsing border for search highlight */
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 5px var(--color-gold-primary), inset 0 0 5px rgba(212, 175, 55, 0.1); }
+  50% { box-shadow: 0 0 20px var(--color-gold-primary), inset 0 0 10px rgba(212, 175, 55, 0.2); }
+}
+.highlight-gold-pulse {
+  animation: gold-pulse 1.5s ease-in-out infinite;
+}
+
+/* Vote count flash + scale animation (Poin 30) */
+@keyframes vote-flash {
+  0% { transform: scale(1); color: var(--color-gold-bright); }
+  50% { transform: scale(1.3); color: var(--color-gold-primary); }
+  100% { transform: scale(1); color: white; }
+}
+.vote-flash-anim {
+  animation: vote-flash 0.6s ease-out;
+}
+
+/* Counter box flash (Poin 33) */
+@keyframes counter-flash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.counter-flash-anim {
+  animation: counter-flash 0.5s ease-out;
+}
+
+/* Sparkle confetti (Poin 30) */
+@keyframes sparkle-fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+  100% { opacity: 0; transform: translateY(-40px) rotate(180deg) scale(0); }
+}
+.sparkle-confetti {
+  animation: sparkle-fall 1.2s ease-out forwards;
+}
+
+/* Rank change animations (Poin 29) */
+@keyframes rank-up {
+  0% { background-color: rgba(16, 185, 129, 0.15); }
+  100% { background-color: transparent; }
+}
+@keyframes rank-down {
+  0% { background-color: rgba(239, 68, 68, 0.15); }
+  100% { background-color: transparent; }
+}
+@keyframes arrow-up {
+  0% { opacity: 1; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes arrow-down {
+  0% { opacity: 1; transform: translateY(-4px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+.rank-up-anim {
+  animation: rank-up 3s ease-out forwards;
+}
+.rank-down-anim {
+  animation: rank-down 3s ease-out forwards;
+}
+.arrow-up-anim {
+  animation: arrow-up 2s ease-out forwards;
+}
+.arrow-down-anim {
+  animation: arrow-down 2s ease-out forwards;
+}
+
+/* ===== STYLE GUIDE: CHEQUERED CHAMPIONS ===== */
+
+/* Card base — glass premium */
+.card {
+  background: rgba(42, 26, 10, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 147, 10, 0.06);
+  border-radius: 12px;
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+/* Live badge */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(242, 237, 214, 0.8);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.live-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #EF4444;
+  animation: live-pulse 1.5s ease-in-out infinite;
+}
+.live-badge--complete {
+  color: #22C55E;
+}
+.live-badge--complete::before {
+  background: #22C55E;
+  animation: none;
+}
+
+/* Stat badge */
+.stat-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-gold-light);
+  background: rgba(92, 26, 26, 0.15);
+  padding: 6px 14px;
+  border: 1px solid rgba(200, 147, 10, 0.1);
+  border-radius: 8px;
+  letter-spacing: 0.05em;
+}
+
+/* Text label (muted uppercase) */
+.text-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 214, 0.4);
+  font-weight: 500;
+}
+
+/* Data font */
+.font-data {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Vote bar fill — gold gradient only */
+.vote-bar-fill {
+  background: linear-gradient(90deg, var(--color-gold-primary), var(--color-gold-bright));
+}
+
+/* Rank 1 highlight — subtle glow */
+.card.rank-1 {
+  border-color: rgba(200, 147, 10, 0.3);
+  box-shadow: 0 0 20px rgba(200, 147, 10, 0.06);
+}
+
+/* Soft pulse glow for sporty mewah countdown */
+@keyframes glow-soft {
+  0%, 100% { text-shadow: 0 0 8px rgba(200, 147, 10, 0.15), 0 0 2px rgba(200, 147, 10, 0.3); }
+  50% { text-shadow: 0 0 20px rgba(200, 147, 10, 0.3), 0 0 4px rgba(200, 147, 10, 0.5); }
+}
+.animate-glow-soft {
+  animation: glow-soft 2s ease-in-out infinite;
+}
+
+/* Scoreboard digit pop animation */
+@keyframes digit-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.animate-digit-pop {
+  animation: digit-pop 0.3s ease-out;
+}
+
+/* Live pulse animation */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Scroll-triggered reveal animation */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+.scroll-reveal--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade-in animation for empty states / modals */
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+}
+
+/* Smooth scroll container */
+.scroll-smooth {
+    scroll-behavior: smooth;
+}
+.scroll-smooth::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.scroll-smooth::-webkit-scrollbar-track {
+    background: var(--color-deep-black);
+}
+.scroll-smooth::-webkit-scrollbar-thumb {
+    background: var(--color-bronze-muted);
+    border-radius: 3px;
+}
+
+/* Nav link hover + active */
+.nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    color: rgba(242, 237, 214, 0.7);
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--color-gold-primary);
+    border-radius: 2px;
+    transition: width 0.3s ease, box-shadow 0.3s ease;
+}
+.nav-link:hover {
+    color: var(--color-gold-light);
+    transform: scale(1.05);
+    text-shadow: 0 0 24px rgba(200, 147, 10, 0.3);
+}
+.nav-link:hover::after {
+    width: 80%;
+    box-shadow: 0 0 8px rgba(200, 147, 10, 0.5);
+}
+.nav-link--active {
+    color: var(--color-gold-light);
+}
+.nav-link--active::after {
+    width: 80%;
+    box-shadow: 0 0 8px rgba(200, 147, 10, 0.3);
+}
+
+/* Scrollbar customizations */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-deep-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bronze-muted);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-primary);
+}
+
+/* Toast slide-in animation */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(100%) translateY(-10px); }
+    to { opacity: 1; transform: translateX(0) translateY(0); }
+}
+.animate-slideIn {
+    animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* FadeIn with staggered delay support */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Pulse glow for sponsor CTA */
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 8px rgba(200, 147, 10, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(200, 147, 10, 0.4); }
+}
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Shake for login/register errors */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 50%, 90% { transform: translateX(-4px); }
+    30%, 70% { transform: translateX(4px); }
+}
+.animate-shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Popup entrance */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.85) translateY(10px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-popIn {
+    animation: popIn 0.25s ease-out;
+}
+
+/* Error page float animation (subtle bobbing icon) */
+@keyframes error-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+.animate-error-float {
+    animation: error-float 3s ease-in-out infinite;
+}
+
+/* Network status slide-up */
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(100%); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+    animation: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Network status slide-down (dismiss) */
+@keyframes slide-down {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(100%); }
+}
+.animate-slide-down {
+    animation: slide-down 0.3s ease-in forwards;
+}
+
+/* Error page status code glow */
+@keyframes error-glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(200, 147, 10, 0.2), 0 0 4px rgba(200, 147, 10, 0.1); }
+    50% { text-shadow: 0 0 40px rgba(200, 147, 10, 0.4), 0 0 8px rgba(200, 147, 10, 0.3); }
+}
+.animate-error-glow {
+    animation: error-glow 2.5s ease-in-out infinite;
+}
+
+/* ErrorBoundary spin-slow for icon */
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+    animation: spin-slow 4s linear infinite;
+}
